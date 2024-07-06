@@ -26,21 +26,21 @@ from kivymd.uix.snackbar import Snackbar
 from kivymd.toast import toast
 
 
-
 class TaskFormer(MDApp):
     condition = ""
     check_date = ""
     check_time = ""
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: object) -> object:
         super().__init__(**kwargs)
+        self.description = None
         self.one = None
         self.one_round = None
         self.screen = Builder.load_file(
             os.path.join(os.getcwd(), "kv_files", "main_screen_kv.kv")
         )
         with open(
-            os.path.join(os.getcwd(), "database_files", "finished_tasks_db.txt"), "r"
+                os.path.join(os.getcwd(), "database_files", "finished_tasks_db.txt"), "r"
         ) as o:
             p = o.readlines()
         menu_items = [
@@ -100,7 +100,7 @@ class TaskFormer(MDApp):
             for self.one_round in self.stored_task_data:
                 self.card = self.root.ids.box
                 self.task = self.one_round[0]
-                self.description = self.one_round[1] if self.one_round[0] != "" else ""
+                self.description = self.one_round[1] if self.one_round[0] != "**" else ""
                 self.hour_min = self.one_round[2] if self.one_round[0] != "" else ""
                 self.day_month_yr = self.one_round[3] if self.one_round[0] != "" else ""
                 self.priority = self.one_round[4] if self.one_round[0] != "" else ""
@@ -121,12 +121,12 @@ class TaskFormer(MDApp):
 
     def finished(self, task):  # to store the finished tasks in seperate file
         with open(
-            os.path.join(os.getcwd(), "database_files", "finished_tasks_db.txt"), "a"
+                os.path.join(os.getcwd(), "database_files", "finished_tasks_db.txt"), "a"
         ) as finished_items:
             finished_items.write(f"{task}\n")
 
     def delete_task(
-        self, task, desc, time, date, priority, condition
+            self, task, desc, time, date, priority, condition
     ):  # to delete particular task and it's content(desc, date, time, etc.)
         data_items = GetData("", "", "", "", "")
         data_items.delete_data(task, desc, time, date, priority)
@@ -137,7 +137,7 @@ class TaskFormer(MDApp):
             self.finished(task)
 
     def delete_notes(
-        self, task, current_date_time
+            self, task, current_date_time
     ):  # to delete particular notes and time
         app = GetNotes("", "")
         app.deletedata(task, current_date_time)
@@ -151,7 +151,7 @@ class TaskFormer(MDApp):
         pop_notes.open()
 
     def read_notes_popup(
-        self, text, current_date_time
+            self, text, current_date_time
     ):  # open popup(just to read notes)
         readnotes = read_notes(app, text, current_date_time)
         readnotes.open()
@@ -204,7 +204,7 @@ class TaskFormer(MDApp):
         self.condition = condition
 
     def task_desc(
-        self, task, desc
+            self, task, desc
     ):  # getting task and description from task adder class(popup)
         self.task = task
         self.description = desc
@@ -248,6 +248,7 @@ class TaskFormer(MDApp):
         elif self.source == "database":
             self.stored_task_data = self.stored_task_data
             for self.one_round in self.stored_task_data:
+                print(self.one_round)
                 self.card = self.root.ids.box
                 self.task = self.one_round[0]
                 self.description = self.one_round[1] if self.one_round[0] != "" else ""
@@ -288,7 +289,7 @@ class TaskFormer(MDApp):
                 )
 
     def delete_all(
-        self,
+            self,
     ):  # open dialog box to confirm if user wants to delete all tasks
         self.dialog = MDDialog(
             title="Delete all on going tasks?",
@@ -315,12 +316,12 @@ class TaskFormer(MDApp):
     def quote_info(self):
         self.quote_dialog = MDDialog(
             title=(
-                '[color=FF3D00]"[/color][b]'
-                + self.the_quote
-                + '[/b][color=FF3D00]"[/color]\n\n'
-                + "By: [b][color=FF3D00]"
-                + self.whose
-                + "[/color][/b]"
+                    '[color=FF3D00]"[/color][b]'
+                    + self.the_quote
+                    + '[/b][color=FF3D00]"[/color]\n\n'
+                    + "By: [b][color=FF3D00]"
+                    + self.whose
+                    + "[/color][/b]"
             )
         )
         self.quote_dialog.open()
@@ -346,13 +347,13 @@ class TaskFormer(MDApp):
 
         try:
             with open(
-                os.path.join(os.getcwd(), "database_files", "quotes_generator.txt")
+                    os.path.join(os.getcwd(), "database_files", "quotes_generator.txt")
             ) as quote:
                 self.all_quotes = quote.readlines()
                 self.all_quotes_ = [quo.strip() for quo in self.all_quotes[1:]]
                 self.chosen = self.all_quotes_[randint(0, len(self.all_quotes_))]
                 self.the_quote = self.chosen[: self.chosen.find(";")]
-                self.whose = self.chosen[self.chosen.find(";") + 1 :].title()
+                self.whose = self.chosen[self.chosen.find(";") + 1:].title()
             Snackbar(
                 text="[color=#000000]" + self.the_quote + "[/color]",
                 buttons=[
@@ -377,14 +378,14 @@ class TaskFormer(MDApp):
         if self.all_data_lines != "database empty":
             for one_line in self.all_data_lines:
                 self.stored_task_data.append(one_line[5:].split(";"))
-            self.task_content("database")
+            self.task_content("databaase")
         else:
             pass
 
         self.gdata = []
         note = GetNotes("", "")
         self.all = note.senddata()
-        if self.all != "databaase empty":
+        if self.all != 'database empty':
             for one in self.all:
                 self.gdata.append(one[5:].split(";"))
 
@@ -555,10 +556,9 @@ class TaskFormer(MDApp):
         theme_dialog = MDThemePicker()
         theme_dialog.open()
 
-
     def about_App(self):
         with open(
-            os.path.join(os.getcwd(), "database_files", "about_app.txt")
+                os.path.join(os.getcwd(), "database_files", "about_app.txt")
         ) as about:
             self.content = about.read()
             self.about_app = MDDialog(
