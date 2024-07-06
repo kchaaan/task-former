@@ -1,0 +1,13 @@
+[u]App's Name[/u]: [b]TaskFormer[/b]
+[u]Version[/u]: [b]1.0.0[/b]
+[u]Developers[/u]: [b] BSIT 1-1 DERA TAPSILOGAN AND MILKSHAKE[/b]
+[u]Gmail[/u]: [b]TaskFormers@gmail.com[/b]
+
+_____________________________________________
+TaskFormer was created to help students manage their schoolwork more easily.
+It's designed to assist students in organizing their assignments, projects,
+and daily tasks more efficiently so that they have more time to focus on learning and personal growth.
+By promoting collaboration among students,
+TaskFormer aims to create a supportive environment
+where everyone can work together and learn from each other.
+_____________________________________________
